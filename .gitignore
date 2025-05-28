@@ -1,0 +1,22 @@
+# 忽略所有 .log 文件
+*.log
+
+# 忽略 node_modules 目录
+node_modules/
+
+# 忽略编译生成的文件
+build/
+dist/
+*.exe
+*.dll
+
+# 忽略 IDE 配置文件
+.vscode/
+.idea/
+
+# 忽略敏感文件（如环境变量文件）
+.env
+.secret
+
+# 例外：不忽略特定的文件（即使其他规则匹配）
+!README.md
