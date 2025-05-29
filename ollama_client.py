@@ -59,8 +59,8 @@ async def generate_text(
                 timeout=timeout
             )
             response.raise_for_status()
-            json = response.json()
-            if (result := json.get("response", "")) is not None:
+            response_json = response.json()
+            if (result := response_json.get("response", "")) is not None:
                 return 1, result.strip()
             return 0, "❌ 接口返回数据格式异常"
 
