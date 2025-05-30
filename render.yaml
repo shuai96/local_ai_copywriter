@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: local-ai-copywriter
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false  # 你可手动在 Render 控制台中设置
