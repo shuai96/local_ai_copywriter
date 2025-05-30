@@ -1,14 +1,52 @@
-def generate_prompt(product_name, product_features, style):
-    return f"""
-你是一位文案撰写助手，请为以下产品生成一段适合小红书的种草文案：
+import logging
 
-产品名称：{product_name}
-产品特点：{product_features}
-文案风格：{style}
+from logging_config import setup_logging
 
-要求：
-- 使用第一人称
-- 添加 emoji
-- 自然真实
-- 最后带上 3 个流行标签
-"""
+setup_logging()
+
+def build_prompt(form: dict) -> str:
+    product_name = form.get("product_name", "")
+    product_features = form.get("product_features", "")
+    target_audience = form.get("target_audience", "") or "大众"
+    use_scenarios = form.get("use_scenarios", "") or "日常"
+    tone = form.get("tone", "自然")
+    style = form.get("style", "小红书种草风，300字")
+    platform = form.get("platform", "通用")
+    output_format = form.get("output_format", "text")
+    lang = form.get("lang", "zh")
+
+    lang_intro_map = {
+        "en": "You are a professional copywriter. Please generate a high-quality, engaging marketing copy in English based on the following information.",
+        "jp": "あなたはプロのコピーライターです。以下の情報に基づき、日本語で高品質かつ魅力的なプロモーション文を作成してください。",
+        "zh": "你是一名专业文案策划，请根据以下信息生成高质量、吸引人的中文营销文案。"
+    }
+    lang_map = {
+        "en": "英文",
+        "jp": "日文",
+        "zh": "中文"
+    }
+    lang_intro = lang_intro_map.get(lang, lang_intro_map["zh"])
+
+    lang_ = lang_map.get(lang, "中文")
+
+    format_tip_map = {
+        "markdown": "请使用 Markdown 格式输出。\n",
+        "html": "请使用 HTML 段落标签输出。\n"
+    }
+    format_tip = format_tip_map.get(output_format, "")
+
+    prompt = (
+        f"{lang_intro}\n"
+        f"{format_tip}"
+        f"产品名称：{product_name}\n"
+        f"产品卖点/核心优势：{product_features}\n"
+        f"目标人群：{target_audience}\n"
+        f"使用场景：{use_scenarios}\n"
+        f"平台风格：{platform}\n"
+        f"语气风格：{tone}\n"
+        f"输出风格：{style}\n"
+        f"输出语言：{lang_}\n"
+        f"请结合上述要素,逻辑清晰、重点突出地撰写一段极具吸引力和说服力的营销文案，突出产品价值，激发用户兴趣和购买欲望。"
+    )
+    logging.info(f"构建的提示词: {prompt}")  # 日志输出，查看生成的提示词内容
+    return prompt

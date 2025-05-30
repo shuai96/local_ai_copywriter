@@ -1,12 +1,16 @@
-import time
+from typing import Optional
+import logging
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from ollama_client import generate_text, get_memory_usage, stream_generate_text
-from prompts import generate_prompt
+from ollama_client import get_memory_usage, stream_generate_text
+from prompts import build_prompt
+from logging_config import setup_logging
+
+setup_logging()
 
 app = FastAPI()
 
@@ -19,36 +23,28 @@ app.add_middleware(
 )
 
 
-class CopyRequest(BaseModel):
+# 请求模型
+class GenerateRequest(BaseModel):
     product_name: str
     product_features: str
-    style: str
-    model: int
+    target_audience: Optional[str] = ""
+    use_scenarios: Optional[str] = ""
+    tone: Optional[str] = ""
+    style: Optional[str] = ""
+    platform: str = "通用"
+    output_format: Optional[str] = "text"
+    lang: Optional[str] = "zh"
+    model: Optional[str] = None  # 新增模型字段，便于流式接口使用
 
-
-@app.post("/ai/total-generate")
-async def generate_copy(req: CopyRequest):
-    start_time = time.time()
-    print(f"内存占用: {get_memory_usage()} GB")
-    prompt = generate_prompt(req.product_name, req.product_features, req.style)
-    code, text = await generate_text(prompt, req.model)
-    elapsed = time.time() - start_time
-    print(f"接口执行耗时: {elapsed:.2f} 秒")
-    if code == 1:
-        print(f"""生成内容: {text}""")
-        return {"success": True, "result": text, "elapsed": elapsed}
-    else:
-        print(f"""错误信息: {text}""")
-        return {"success": False, "result": text, "elapsed": elapsed}
 
 
 @app.post("/ai/stream-generate")
-async def stream_generate_copy(req: CopyRequest):
-    print(f"""内存占用: {get_memory_usage()} GB""")
-    prompt = generate_prompt(req.product_name, req.product_features, req.style)
+async def stream_generate_copy(request: GenerateRequest):
+    logging.info(f"内存占用: {get_memory_usage()} GB")
+    prompt = build_prompt(request.model_dump())  # 传递 dict 以兼容 prompts.py，修正弃用警告
     """流式生成API接口"""
     return StreamingResponse(
-        stream_generate_text(prompt, req.model, True),
+        stream_generate_text(prompt, request.model, True),
         media_type="text/event-stream",
         headers={"Cache-Control": "no-cache"}
     )
