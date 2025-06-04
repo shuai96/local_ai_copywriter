@@ -1,5 +1,6 @@
 import logging.config
 import os
+import copy
 
 LOGGING_CONFIG = {
     'version': 1,
@@ -17,7 +18,8 @@ LOGGING_CONFIG = {
         'file': {
             'class': 'logging.FileHandler',
             'formatter': 'default',
-            'filename': os.getenv('LOG_FILE', 'app.log'),
+            # 'filename' 字段将在 setup_logging() 里动态设置
+            # 'filename': os.getenv('LOG_FILE', 'app.log'),
             'encoding': 'utf-8',
         },
     },
@@ -28,5 +30,9 @@ LOGGING_CONFIG = {
 }
 
 def setup_logging():
-    logging.config.dictConfig(LOGGING_CONFIG)
-
+    # 确保 dist 目录存在，避免静态文件挂载时报错
+    if not os.path.exists('dist'):
+        os.makedirs('dist')
+    config = copy.deepcopy(LOGGING_CONFIG)
+    config['handlers']['file']['filename'] = os.getenv('LOG_FILE', 'app.log')
+    logging.config.dictConfig(config)
