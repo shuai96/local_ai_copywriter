@@ -1,6 +1,5 @@
 import logging
-
-from logging_config import setup_logging
+from backend.logging_config import setup_logging
 
 setup_logging()
 
@@ -26,7 +25,6 @@ def build_prompt(form: dict) -> str:
         "zh": "中文"
     }
     lang_intro = lang_intro_map.get(lang, lang_intro_map["zh"])
-
     lang_ = lang_map.get(lang, "中文")
 
     format_tip_map = {
@@ -48,5 +46,5 @@ def build_prompt(form: dict) -> str:
         f"输出语言：{lang_}\n"
         f"请结合上述要素,逻辑清晰、重点突出地撰写一段极具吸引力和说服力的营销文案，突出产品价值，激发用户兴趣和购买欲望。"
     )
-    logging.info(f"构建的提示词: {prompt}")  # 日志输出，查看生成的提示词内容
     return prompt
+

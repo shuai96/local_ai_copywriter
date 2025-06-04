@@ -1,0 +1,82 @@
+/* 布局相关样式 */
+html, body, #app {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, #app {
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow-x: hidden;
+}
+
+.app-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #eff6ff 0%, #ede9fe 100%);
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+.app-container {
+  width: auto;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.app-main-row {
+  display: flex;
+  flex-direction: row;
+  gap: 2.5rem;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  transition: justify-content 0.4s cubic-bezier(0.4,0,0.2,1), gap 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+.form-card {
+  transition: margin 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+}
+
+@media (max-width: 900px) {
+  .app-container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .form-card, .output-wrap {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .app-main-row {
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    transition: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .app-bg {
+    padding: 0.5rem;
+  }
+}
+

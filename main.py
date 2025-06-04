@@ -9,9 +9,9 @@ from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from logging_config import setup_logging
-from ollama_client import get_memory_usage, stream_generate_text
-from prompts import build_prompt
+from backend.logging_config import setup_logging
+from backend.ollama_client import get_memory_usage, stream_generate_text
+from backend.prompts import build_prompt
 
 setup_logging()
 
@@ -30,7 +30,7 @@ app.mount("/", StaticFiles(directory=get_dist_path(), html=True), name="static")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://local-ai-copywriter-web.onrender.com"],
+    allow_origins=["http://localhost:5174", "https://local-ai-copywriter-web.onrender.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
