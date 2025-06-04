@@ -1,31 +1,29 @@
-import { fileURLToPath, URL } from 'node:url'
-
-import { defineConfig } from 'vite'
+import path from 'node:path'
+import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
-
 export default defineConfig({
-    build: {
-    outDir: '../dist',
-    emptyOutDir: true,
-  },
+  root: __dirname,
   plugins: [
     vue(),
     vueDevTools(),
   ],
+  build: {
+    outDir: '../dist',
+    emptyOutDir: true,
+  },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': path.resolve(__dirname, 'src')
     },
   },
   server: {
-    port: 5174, // 修改前端启动端口为5174
+    port: 5174,
     proxy: {
-      '/generate': {
-        target: 'http://0.0.0.0:8000/ai/stream-generate',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/generate/, ''),
+      '/ai/stream-generate': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true
       },
     },
   },

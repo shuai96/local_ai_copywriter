@@ -48,7 +48,7 @@ export const submitForm = async () => {
   let thinkBuffer = ''
   let contentBuffer = ''
   try {
-    const response = await fetch('https://local-ai-copywriter.onrender.com/ai/stream-generate', {
+    const response = await fetch('/ai/stream-generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form.value),

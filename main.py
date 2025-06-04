@@ -25,8 +25,7 @@ def get_dist_path():
     return os.path.abspath('dist')
 
 
-# 挂载前端静态文件
-app.mount("/", StaticFiles(directory=get_dist_path(), html=True), name="static")
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -68,6 +67,8 @@ if __name__ == "__main__":
 
     port = int(os.environ.get("PORT", 8000))
     if getattr(sys, 'frozen', False):
+        # 挂载前端静态文件
+        app.mount("/", StaticFiles(directory=get_dist_path(), html=True), name="static")
         # 打包环境，直接传app对象
         uvicorn.run(app, host="0.0.0.0", port=port, reload=False, log_config=None)
     else:

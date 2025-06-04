@@ -1,39 +1,30 @@
-# local_ai_copywriter_web
+# Local AI Copywriter - 前端（Vue3）
 
-This template should help get you started developing with Vue 3 in Vite.
+本目录为前端项目，基于 Vue3 + Vite 构建。
 
-## Recommended IDE Setup
+## 目录结构
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- src/                # 源码目录
+- public/             # 公共资源
+- index.html          # 入口 HTML
+- env.d.ts            # 类型声明
+- tsconfig.app.json   # 前端 ts 配置
+- vite.config.ts      # Vite 配置
 
-## Type Support for `.vue` Imports in TS
+## 常用命令
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+```bash
+npm install         # 安装依赖
+npm run dev         # 启动开发服务器（默认端口 5174）
+npm run build       # 打包，产物输出到 ../dist/
 ```
 
-### Compile and Hot-Reload for Development
+## 代理与后端联调
 
-```sh
-npm run dev
-```
+开发环境下，/generate 接口已代理到 FastAPI 后端（见 vite.config.ts）。
 
-### Type-Check, Compile and Minify for Production
+## 说明
 
-```sh
-npm run build
-```
+- 产物打包后会输出到项目根目录 dist/，由后端托管静态文件。
+- 其余前端配置文件已提取到项目根目录。
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
