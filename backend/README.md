@@ -4,10 +4,11 @@
 
 ## 目录结构
 
-- logging_config.py   # 日志配置
-- ollama_client.py   # Ollama API 客户端与流式生成逻辑
-- prompts.py         # 提示词构建逻辑
-- __init__.py        # 包初始化文件
+- models/           # 数据模型
+- routes/           # 路由
+- services/         # 业务逻辑/服务（如 ollama_client.py）
+- utils/            # 工具函数、日志配置（如 prompts.py, logging_config.py）
+- README.md         # 本说明文件
 
 ## 主要功能
 
@@ -31,13 +32,4 @@ python main.py
 ```
 
 PyInstaller 打包后：
-```bash
-./main.exe
-```
-
-## 说明
-
-- main.py 为后端启动入口，已自动适配源码/打包两种环境
-- 静态文件（前端打包产物）默认托管于 dist/ 目录
-- 详细接口与参数见 main.py 及 prompts.py
-
+详见根目录 README.md

@@ -53,6 +53,10 @@ export const submitForm = async () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form.value),
     })
+    if (!response.ok) {
+      // 新增：处理 HTTP 错误（如 404/500）
+      throw new Error(`服务异常，状态码：${response.status}`)
+    }
     if (!response.body) throw new Error('No response body')
     const reader = response.body.getReader()
     const decoder = new TextDecoder('utf-8')

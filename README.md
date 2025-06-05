@@ -1,66 +1,43 @@
-# Local AI Copywriter 项目总览
+# Local AI Copywriter
 
-本项目为前后端分离的 AI 文案生成工具，后端基于 FastAPI，前端基于 Vue3 + Vite。
-
----
+本项目为本地 AI 文案生成工具，包含前端（Vue3）和后端（FastAPI）两部分，支持流式文案生成、多模型选择、内存监控等功能。
 
 ## 目录结构
 
-```
-local_ai_copywriter/
-├── backend/           # 后端核心代码（FastAPI）
-│   ├── logging_config.py
-│   ├── ollama_client.py
-│   ├── prompts.py
-│   └── README.md
-├── frontend/          # 前端核心代码（Vue3 + Vite）
-│   ├── src/
-│   ├── public/
-│   ├── index.html
-│   ├── env.d.ts
-│   ├── tsconfig.app.json
-│   ├── vite.config.ts
-│   └── README.md
-├── dist/              # 前端打包产物，后端托管静态文件
-├── main.py            # FastAPI 启动入口
-├── requirements.txt   # Python 依赖
-├── package.json       # 前端依赖
-├── ...                # 其他配置文件
-```
+- frontend/         # 前端 Vue3 项目
+- backend/          # 后端 FastAPI 项目
+- main.py           # 后端启动入口
+- requirements.txt  # 后端依赖
 
----
+## 后端 backend 结构
 
-## 快速开始
+- models/           # 数据模型
+- routes/           # 路由
+- services/         # 业务逻辑/服务
+- utils/            # 工具函数、日志配置
 
-### 1. 后端（FastAPI）
+## 启动方式
+
+1. 安装依赖
 
 ```bash
 pip install -r requirements.txt
+```
+
+2. 启动后端
+
+```bash
 python main.py
 ```
 
-### 2. 前端（Vue3 + Vite）
+3. 启动前端（进入 frontend 目录）
 
 ```bash
 npm install
-npm run dev      # 启动开发服务器，默认端口 5174
-npm run build    # 打包产物输出到 dist/
+npm run dev
 ```
 
----
+## 打包说明
 
-## 主要功能
-- AI 文案流式生成，支持多模型
-- 前后端分离，接口联调便捷
-- 支持本地和云端部署
-
----
-
-## 相关文档
-- backend/README.md  —— 后端详细说明
-- frontend/README.md —— 前端详细说明
-
----
-
-如有问题请查阅各子目录 README 或联系开发者。
-
+- 后端支持 PyInstaller 打包，详见 backend/README.md
+- 前端支持 Vite 构建
